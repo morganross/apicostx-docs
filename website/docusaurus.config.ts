@@ -45,26 +45,23 @@ const config: Config = {
   themeConfig: {
     image: 'img/social-card.svg',
     navbar: {
-      title: 'ACM Docs',
-      logo: {
-        alt: 'ACM Docs',
-        src: 'img/logo.svg',
-      },
+      title: 'API Cost X',
       items: [
-        {type: 'doc', docId: 'home', position: 'left', label: 'Overview'},
-        {to: '/help', position: 'left', label: 'Help'},
-        {to: '/users/app-overview', position: 'left', label: 'Users'},
-        {to: '/admins/frontend-operations', position: 'left', label: 'Admins'},
+        {href: 'https://apicostx.com/about/', position: 'left', label: 'About'},
         {
-          to: '/devs/frontend',
+          href: 'https://apicostx.com/membership-levels/',
           position: 'left',
-          label: 'Developers',
+          label: 'Pricing',
         },
+        {href: 'https://apicostx.com/app/', position: 'left', label: 'APP'},
+        {href: 'https://apicostx.com/login/', position: 'left', label: 'Log In'},
         {
-          href: `https://github.com/${repository}`,
-          position: 'right',
-          label: 'GitHub',
+          to: '/',
+          position: 'left',
+          label: 'Docs',
         },
+        {href: 'https://apicostx.com/security/', position: 'left', label: 'Security'},
+        {href: 'https://apicostx.com/credits/', position: 'left', label: 'Buy Credits'},
       ],
     },
     footer: {

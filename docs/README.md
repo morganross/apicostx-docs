@@ -44,6 +44,7 @@ Users should start here:
 Admins should start here:
 
 - [admins/frontend-operations.md](admins/frontend-operations.md)
+- [admins/updating-self-hosted-docs.md](admins/updating-self-hosted-docs.md)
 - [admins/frontend-security.md](admins/frontend-security.md)
 - [admins/support-runbook.md](admins/support-runbook.md)
 
