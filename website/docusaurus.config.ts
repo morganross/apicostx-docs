@@ -5,8 +5,8 @@ const repository = process.env.GITHUB_REPOSITORY ?? 'morganross/apicostx-docs';
 const [organizationName, projectName] = repository.split('/');
 const defaultSiteUrl = 'https://apicostx.com';
 const defaultBaseUrl = '/docs-static/';
-const url = process.env.DOCS_SITE_URL ?? defaultSiteUrl;
-const baseUrl = process.env.DOCS_BASE_URL ?? defaultBaseUrl;
+const url = process.env.DOCS_SITE_URL || defaultSiteUrl;
+const baseUrl = process.env.DOCS_BASE_URL || defaultBaseUrl;
 
 const config: Config = {
   title: 'ACM Documentation',
