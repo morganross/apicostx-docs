@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-DOCUSAURUS-GITHUB-PAGES-PLAN" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.6.3">
+<title data-rh="true">Docusaurus + GitHub Pages Plan | ACM Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://morganross.github.io/apicostx-docs/img/social-card.svg"><meta data-rh="true" name="twitter:image" content="https://morganross.github.io/apicostx-docs/img/social-card.svg"><meta data-rh="true" property="og:url" content="https://morganross.github.io/apicostx-docs/DOCUSAURUS-GITHUB-PAGES-PLAN"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Docusaurus + GitHub Pages Plan | ACM Documentation"><meta data-rh="true" name="description" content="This is the plan for turning the current docs into a Docusaurus site and publishing it with GitHub Pages and GitHub Actions."><meta data-rh="true" property="og:description" content="This is the plan for turning the current docs into a Docusaurus site and publishing it with GitHub Pages and GitHub Actions."><link data-rh="true" rel="icon" href="/apicostx-docs/img/logo.svg"><link data-rh="true" rel="canonical" href="https://morganross.github.io/apicostx-docs/DOCUSAURUS-GITHUB-PAGES-PLAN"><link data-rh="true" rel="alternate" href="https://morganross.github.io/apicostx-docs/DOCUSAURUS-GITHUB-PAGES-PLAN" hreflang="en"><link data-rh="true" rel="alternate" href="https://morganross.github.io/apicostx-docs/DOCUSAURUS-GITHUB-PAGES-PLAN" hreflang="x-default"><link rel="stylesheet" href="/apicostx-docs/assets/css/styles.5e0fbdf3.css">
+<script src="/apicostx-docs/assets/js/runtime~main.953be8a2.js" defer="defer"></script>
+<script src="/apicostx-docs/assets/js/main.b606dd1e.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"dark")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/apicostx-docs/"><b class="navbar__title text--truncate">API Cost X</b></a><a href="https://apicostx.com/about/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a href="https://apicostx.com/membership-levels/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Pricing<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a href="https://apicostx.com/app/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">APP<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a href="https://apicostx.com/login/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Log In<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/apicostx-docs/">Docs</a><a href="https://apicostx.com/security/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Security<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><a href="https://apicostx.com/credits/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Buy Credits<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div><div class="navbar__items navbar__items--right"><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/">ACM Documentation</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/what-is-acm">What Is ACM?</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/quickstart">Quick Start</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/core-concepts">Core Concepts</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/how-acm-works">How ACM Works</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/common-uses">Common Uses</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/full-pipeline">The Full Pipeline</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/apicostx-docs/glossary">Glossary</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/apicostx-docs/help">Help</a><button aria-label="Expand sidebar category &#x27;Help&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/apicostx-docs/users/app-overview">User Guides</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/apicostx-docs/admins/frontend-operations">Admin Guides</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/apicostx-docs/devs/frontend">Developer Guides</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/apicostx-docs/frontend">Frontend Deep Dive</a><button aria-label="Expand sidebar category &#x27;Frontend Deep Dive&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/apicostx-docs/LAWS">Reference and Policy</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/apicostx-docs/LAWS">LAWS</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/apicostx-docs/auth-security-report">ACM2 Authentication &amp; Security Report</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/apicostx-docs/DOCUSAURUS-GITHUB-PAGES-PLAN">Docusaurus + GitHub Pages Plan</a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/apicostx-docs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Reference and Policy</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Docusaurus + GitHub Pages Plan</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Docusaurus + GitHub Pages Plan</h1></header>
+<p>This is the plan for turning the current docs into a Docusaurus site and publishing it with GitHub Pages and GitHub Actions.</p>
+<p>It is based on the official Docusaurus docs and the official GitHub Pages and GitHub Actions docs.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-we-are-building">What We Are Building<a href="#what-we-are-building" class="hash-link" aria-label="Direct link to What We Are Building" title="Direct link to What We Are Building">​</a></h2>
+<p>We are building a documentation website, not just a folder of Markdown files.</p>
+<p>The site should work like a help center and knowledge base for using the website. It should answer the normal user questions first:</p>
+<ul>
+<li>what the site is for</li>
+<li>how to get started</li>
+<li>what each main page does</li>
+<li>how provider keys and GitHub connections work</li>
+<li>what to do when something goes wrong</li>
+</ul>
+<p>After that, it should also support admin and developer documentation.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="main-recommendation">Main Recommendation<a href="#main-recommendation" class="hash-link" aria-label="Direct link to Main Recommendation" title="Direct link to Main Recommendation">​</a></h2>
+<p>Use Docusaurus in docs-only mode and publish it with a custom GitHub Actions workflow to GitHub Pages.</p>
+<p>Use one repository for both the source and the published site.</p>
+<p>Keep the current Markdown content in a docs content folder, and put the Docusaurus app itself in a separate folder so we do not mix site code with doc content.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-folder-shape">Recommended Folder Shape<a href="#recommended-folder-shape" class="hash-link" aria-label="Direct link to Recommended Folder Shape" title="Direct link to Recommended Folder Shape">​</a></h2>
+<p>The cleanest layout is:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">repo/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── docs/          # markdown content</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">└── website/       # Docusaurus app</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>Why this layout:</p>
+<p>The current content already lives in <code>/docs</code>. Docusaurus also works well in a monorepo-style setup where the site app lives in <code>website/</code>. The official Docusaurus installation docs show this shape as a valid approach for existing projects.</p>
+<p>This lets us keep the content and the website code separate.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-docusaurus-setup">Recommended Docusaurus Setup<a href="#recommended-docusaurus-setup" class="hash-link" aria-label="Direct link to Recommended Docusaurus Setup" title="Direct link to Recommended Docusaurus Setup">​</a></h2>
+<p>Create the site with the classic template inside <code>website/</code>.</p>
+<p>Example command:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">npx create-docusaurus@latest website classic</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>Use docs-only mode so the documentation lives at the site root instead of under <code>/docs/</code>.</p>
+<p>That means:</p>
+<ul>
+<li>set the docs plugin <code>routeBasePath</code> to <code>/</code></li>
+<li>set the docs plugin <code>path</code> to <code>../docs</code> so the Docusaurus app in <code>website/</code> reads the real docs folder we already have</li>
+<li>disable the blog unless we decide we really want a blog</li>
+<li>make one doc the homepage with <code>slug: /</code></li>
+<li>remove the generated homepage in <code>src/pages/index.*</code> if it conflicts with the docs homepage</li>
+</ul>
+<p>This matches the official Docusaurus docs-only mode guidance.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="exact-repo-shape-to-target">Exact Repo Shape To Target<a href="#exact-repo-shape-to-target" class="hash-link" aria-label="Direct link to Exact Repo Shape To Target" title="Direct link to Exact Repo Shape To Target">​</a></h2>
+<p>The target layout should be:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">repo/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── docs/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── README.md</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── help/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── users/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── admins/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── devs/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   └── reference/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── website/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── docusaurus.config.ts</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── sidebars.ts</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── package.json</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   ├── static/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">│   └── src/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">└── .github/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    └── workflows/</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>The important point is that the Markdown source stays in the real top-level <code>docs/</code> folder.</p>
+<p>The Docusaurus app should live in <code>website/</code> and read from <code>../docs</code>.</p>
+<p>That gives us one docs source of truth and keeps the site code separate from the docs content.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="exact-docusaurus-config-decisions">Exact Docusaurus Config Decisions<a href="#exact-docusaurus-config-decisions" class="hash-link" aria-label="Direct link to Exact Docusaurus Config Decisions" title="Direct link to Exact Docusaurus Config Decisions">​</a></h2>
+<p>The first implementation should use these choices:</p>
+<ul>
+<li>Docusaurus root: <code>website/</code></li>
+<li>content root: <code>../docs</code></li>
+<li>docs route base path: <code>/</code></li>
+<li>blog: disabled</li>
+<li>one doc with <code>slug: /</code> as the homepage</li>
+<li>explicit <code>trailingSlash</code> in config</li>
+<li><code>.nojekyll</code> in <code>website/static/</code></li>
+</ul>
+<p>The <code>docusaurus.config.ts</code> file should be treated as the main deployment truth:</p>
+<ul>
+<li><code>url</code> should be the full published site origin</li>
+<li><code>baseUrl</code> should match whether this is a project Pages site or a root-domain site</li>
+<li><code>organizationName</code> should be the GitHub user or org</li>
+<li><code>projectName</code> should be the repository name</li>
+</ul>
+<p>If the site is published as <code>https://org.github.io/repo-name/</code>, then <code>baseUrl</code> should be <code>/repo-name/</code>.</p>
+<p>If the site is published at the root of a custom domain or an org/user Pages root, then <code>baseUrl</code> should be <code>/</code>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="exact-github-actions-shape">Exact GitHub Actions Shape<a href="#exact-github-actions-shape" class="hash-link" aria-label="Direct link to Exact GitHub Actions Shape" title="Direct link to Exact GitHub Actions Shape">​</a></h2>
+<p>Use two workflow files:</p>
+<ul>
+<li><code>.github/workflows/docs-build.yml</code></li>
+<li><code>.github/workflows/docs-deploy.yml</code></li>
+</ul>
+<p>The build workflow should run on pull requests and only verify that the site builds.</p>
+<p>The deploy workflow should run on pushes to the default branch and should publish the built site to GitHub Pages.</p>
+<p>Because the Docusaurus app will live in <code>website/</code>, the workflows should either:</p>
+<ul>
+<li>set <code>defaults.run.working-directory: website</code></li>
+</ul>
+<p>or</p>
+<ul>
+<li>run the build commands with an explicit <code>working-directory: website</code></li>
+</ul>
+<p>The uploaded Pages artifact should be <code>website/build</code>.</p>
+<p>The deploy workflow should:</p>
+<ul>
+<li>use the <code>github-pages</code> environment</li>
+<li>grant <code>pages: write</code> and <code>id-token: write</code></li>
+<li>use <code>actions/deploy-pages@v4</code></li>
+</ul>
+<p>The Pages setting in GitHub must be:</p>
+<ul>
+<li><code>Settings &gt; Pages &gt; Source = GitHub Actions</code></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-information-architecture">Recommended Information Architecture<a href="#recommended-information-architecture" class="hash-link" aria-label="Direct link to Recommended Information Architecture" title="Direct link to Recommended Information Architecture">​</a></h2>
+<p>The Docusaurus site should lead with help and self-service docs.</p>
+<p>Top level:</p>
+<ul>
+<li>Help</li>
+<li>User Guides</li>
+<li>Admin Guides</li>
+<li>Developer Guides</li>
+<li>Reference</li>
+</ul>
+<p>The first visible path on the site should be the help center, not the developer docs.</p>
+<p>That means the landing page and top navigation should guide people into:</p>
+<ul>
+<li>what this site is for</li>
+<li>getting started</li>
+<li>main pages</li>
+<li>provider keys and GitHub</li>
+<li>account and access</li>
+<li>common problems</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-github-pages-approach">Recommended GitHub Pages Approach<a href="#recommended-github-pages-approach" class="hash-link" aria-label="Direct link to Recommended GitHub Pages Approach" title="Direct link to Recommended GitHub Pages Approach">​</a></h2>
+<p>Use GitHub Pages with a custom GitHub Actions workflow.</p>
+<p>This is the better fit here because Docusaurus needs a real build step. GitHub’s own Pages docs recommend a custom Actions workflow when you need a build process that is not the simple branch-and-Jekyll setup.</p>
+<p>In repository settings:</p>
+<p><code>Settings &gt; Pages &gt; Source = GitHub Actions</code></p>
+<p>Do not use the old habit of manually pushing built files to a docs folder on <code>main</code> unless we have a strong reason to keep things that simple.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-github-actions-flow">Recommended GitHub Actions Flow<a href="#recommended-github-actions-flow" class="hash-link" aria-label="Direct link to Recommended GitHub Actions Flow" title="Direct link to Recommended GitHub Actions Flow">​</a></h2>
+<p>Use two workflows:</p>
+<ol>
+<li>A pull request workflow that only tests the build.</li>
+<li>A deploy workflow that builds and publishes on pushes to the default branch.</li>
+</ol>
+<p>The official Docusaurus deployment docs show this pattern, and GitHub’s Pages docs show the current official Pages actions to use.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="build-job">Build job<a href="#build-job" class="hash-link" aria-label="Direct link to Build job" title="Direct link to Build job">​</a></h3>
+<p>The build job should:</p>
+<ul>
+<li>check out the repo</li>
+<li>set up Node</li>
+<li>install dependencies</li>
+<li>run the Docusaurus build</li>
+<li>upload the built site as a Pages artifact</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deploy-job">Deploy job<a href="#deploy-job" class="hash-link" aria-label="Direct link to Deploy job" title="Direct link to Deploy job">​</a></h3>
+<p>The deploy job should:</p>
+<ul>
+<li>depend on the build job</li>
+<li>use the <code>github-pages</code> environment</li>
+<li>have <code>pages: write</code> and <code>id-token: write</code> permissions</li>
+<li>use <code>actions/deploy-pages</code></li>
+</ul>
+<p>GitHub’s Pages docs are very explicit about those permissions and the environment requirement.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-action-versions">Recommended Action Versions<a href="#recommended-action-versions" class="hash-link" aria-label="Direct link to Recommended Action Versions" title="Direct link to Recommended Action Versions">​</a></h2>
+<p>Use the current GitHub Pages actions from GitHub’s own docs:</p>
+<ul>
+<li><code>actions/checkout@v5</code></li>
+<li><code>actions/configure-pages@v5</code></li>
+<li><code>actions/upload-pages-artifact@v4</code></li>
+<li><code>actions/deploy-pages@v4</code></li>
+</ul>
+<p>The Docusaurus docs still show a valid example, but GitHub’s own Pages docs show newer versions of the Pages-related actions. We should follow GitHub’s current versions.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-docusaurus-config-decisions">Recommended Docusaurus Config Decisions<a href="#recommended-docusaurus-config-decisions" class="hash-link" aria-label="Direct link to Recommended Docusaurus Config Decisions" title="Direct link to Recommended Docusaurus Config Decisions">​</a></h2>
+<p>These values need to be set correctly before deployment:</p>
+<ul>
+<li><code>url</code></li>
+<li><code>baseUrl</code></li>
+<li><code>organizationName</code></li>
+<li><code>projectName</code></li>
+<li><code>trailingSlash</code></li>
+</ul>
+<p>The big one is <code>baseUrl</code>.</p>
+<p>If this is a project Pages site, the URL usually looks like:</p>
+<p><code>https://username.github.io/repo-name/</code></p>
+<p>In that case, <code>baseUrl</code> should usually be:</p>
+<p><code>/repo-name/</code></p>
+<p>If this is an organization or user site, or if we are using a custom domain, the URL can live at the root:</p>
+<p><code>https://docs.example.com/</code></p>
+<p>or</p>
+<p><code>https://username.github.io/</code></p>
+<p>In that case, <code>baseUrl</code> should usually be:</p>
+<p><code>/</code></p>
+<p>The official Docusaurus deployment docs are very clear that this part matters.</p>
+<p>Also:</p>
+<ul>
+<li>set <code>trailingSlash</code> explicitly instead of leaving it undefined</li>
+<li>add <code>.nojekyll</code> so GitHub Pages does not let Jekyll strip files that begin with <code>_</code></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="custom-domain-plan">Custom Domain Plan<a href="#custom-domain-plan" class="hash-link" aria-label="Direct link to Custom Domain Plan" title="Direct link to Custom Domain Plan">​</a></h2>
+<p>If we use a custom domain:</p>
+<ul>
+<li>configure the custom domain in GitHub Pages settings</li>
+<li>configure the matching DNS records with the DNS provider</li>
+</ul>
+<p>For a GitHub Pages site published by a custom Actions workflow, GitHub’s docs say the custom domain lives in the repository Pages settings. An existing <code>CNAME</code> file is not required there and should not be treated as the source of truth.</p>
+<p>If we later decide we want a <code>CNAME</code> file in the built output for portability, we can add it deliberately, but the GitHub Pages settings must still be considered the real control point.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="content-migration-plan">Content Migration Plan<a href="#content-migration-plan" class="hash-link" aria-label="Direct link to Content Migration Plan" title="Direct link to Content Migration Plan">​</a></h2>
+<p>We already have real Markdown docs in <code>/docs</code>. We should not throw them away.</p>
+<p>Migration should happen in stages:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="stage-1">Stage 1<a href="#stage-1" class="hash-link" aria-label="Direct link to Stage 1" title="Direct link to Stage 1">​</a></h3>
+<p>Move the current help-style and intro docs into the new Docusaurus docs structure.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="stage-2">Stage 2<a href="#stage-2" class="hash-link" aria-label="Direct link to Stage 2" title="Direct link to Stage 2">​</a></h3>
+<p>Create a real help center landing page and the first main sidebar.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="stage-3">Stage 3<a href="#stage-3" class="hash-link" aria-label="Direct link to Stage 3" title="Direct link to Stage 3">​</a></h3>
+<p>Move user, admin, and developer docs into clear sections with sidebars.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="stage-4">Stage 4<a href="#stage-4" class="hash-link" aria-label="Direct link to Stage 4" title="Direct link to Stage 4">​</a></h3>
+<p>Clean up filenames, front matter, slugs, and titles so the URLs and navigation feel intentional.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-content-structure-inside-docusaurus">Recommended Content Structure Inside Docusaurus<a href="#recommended-content-structure-inside-docusaurus" class="hash-link" aria-label="Direct link to Recommended Content Structure Inside Docusaurus" title="Direct link to Recommended Content Structure Inside Docusaurus">​</a></h2>
+<p>Inside the docs content, the first pass should look something like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">docs/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── intro/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── help/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── users/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── admins/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">├── devs/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">└── reference/</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>The help section should come first in the sidebar and should be the easiest part of the site to understand.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-build-and-local-dev-flow">Recommended Build and Local Dev Flow<a href="#recommended-build-and-local-dev-flow" class="hash-link" aria-label="Direct link to Recommended Build and Local Dev Flow" title="Direct link to Recommended Build and Local Dev Flow">​</a></h2>
+<p>Use the standard Docusaurus local commands:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token builtin class-name" style="color:rgb(255, 203, 107)">cd</span><span class="token plain"> website</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token function" style="color:rgb(130, 170, 255)">npm</span><span class="token plain"> </span><span class="token function" style="color:rgb(130, 170, 255)">install</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token function" style="color:rgb(130, 170, 255)">npm</span><span class="token plain"> run start</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>for local preview, and:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token builtin class-name" style="color:rgb(255, 203, 107)">cd</span><span class="token plain"> website</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token function" style="color:rgb(130, 170, 255)">npm</span><span class="token plain"> run build</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>for production build checks.</p>
+<p>The official Docusaurus docs say the build output goes into <code>/build</code>.</p>
+<p>The current Docusaurus install docs also require Node.js 20 or above, so the local and CI Node version should be 20+.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="open-decisions-we-need-before-implementation">Open Decisions We Need Before Implementation<a href="#open-decisions-we-need-before-implementation" class="hash-link" aria-label="Direct link to Open Decisions We Need Before Implementation" title="Direct link to Open Decisions We Need Before Implementation">​</a></h2>
+<p>These are the decisions that affect the config and deployment:</p>
+<ol>
+<li>What repository will hold the Docusaurus site source?</li>
+<li>Will the site live as a project Pages site or an org/user Pages site?</li>
+<li>Are we using a custom domain from the start?</li>
+<li>Do we want docs-only mode at the root, or do we want the site under <code>/docs/</code>?</li>
+<li>Do we want a blog at all, or should we disable it now?</li>
+<li>Do we want autogenerated sidebars from the folder structure, or do we want fully hand-written sidebars?</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-answers">Recommended Answers<a href="#recommended-answers" class="hash-link" aria-label="Direct link to Recommended Answers" title="Direct link to Recommended Answers">​</a></h2>
+<p>My recommendations are:</p>
+<ol>
+<li>Use the same repository as the docs source.</li>
+<li>Use GitHub Pages with a custom GitHub Actions workflow.</li>
+<li>Use docs-only mode.</li>
+<li>Disable the blog for now.</li>
+<li>Start with mostly autogenerated sidebars and only hand-tune where needed.</li>
+<li>Use a custom domain only if we already know what it is and are ready to configure DNS right away.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="implementation-phases">Implementation Phases<a href="#implementation-phases" class="hash-link" aria-label="Direct link to Implementation Phases" title="Direct link to Implementation Phases">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="phase-1-scaffold">Phase 1: Scaffold<a href="#phase-1-scaffold" class="hash-link" aria-label="Direct link to Phase 1: Scaffold" title="Direct link to Phase 1: Scaffold">​</a></h3>
+<ul>
+<li>create <code>website/</code></li>
+<li>install Docusaurus</li>
+<li>configure docs-only mode</li>
+<li>point docs content at the real docs folder with <code>path: &#x27;../docs&#x27;</code></li>
+<li>remove the generated homepage if the docs homepage takes <code>/</code></li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="phase-2-shape-the-site">Phase 2: Shape the site<a href="#phase-2-shape-the-site" class="hash-link" aria-label="Direct link to Phase 2: Shape the site" title="Direct link to Phase 2: Shape the site">​</a></h3>
+<ul>
+<li>create navbar</li>
+<li>create sidebar structure</li>
+<li>create homepage doc</li>
+<li>move the help center docs into the first-class path</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="phase-3-deploy">Phase 3: Deploy<a href="#phase-3-deploy" class="hash-link" aria-label="Direct link to Phase 3: Deploy" title="Direct link to Phase 3: Deploy">​</a></h3>
+<ul>
+<li>add GitHub Pages workflows</li>
+<li>set Pages source to GitHub Actions</li>
+<li>make the workflows build from <code>website/</code></li>
+<li>run PR build checks</li>
+<li>deploy from default branch</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="phase-4-harden-and-polish">Phase 4: Harden and polish<a href="#phase-4-harden-and-polish" class="hash-link" aria-label="Direct link to Phase 4: Harden and polish" title="Direct link to Phase 4: Harden and polish">​</a></h3>
+<ul>
+<li>add <code>.nojekyll</code></li>
+<li>add <code>CNAME</code> if needed</li>
+<li>set <code>url</code>, <code>baseUrl</code>, <code>trailingSlash</code></li>
+<li>test broken links</li>
+<li>test search, navigation, and mobile layout</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="success-checklist">Success Checklist<a href="#success-checklist" class="hash-link" aria-label="Direct link to Success Checklist" title="Direct link to Success Checklist">​</a></h2>
+<p>We are done when:</p>
+<ul>
+<li>the docs build locally</li>
+<li>pull requests run a successful docs build check</li>
+<li>pushes to the default branch deploy automatically</li>
+<li>the site opens on GitHub Pages</li>
+<li>the homepage reads like a help center, not a source tree</li>
+<li>help docs are easy to find</li>
+<li>user, admin, and developer docs each have a clear home</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="official-sources-used">Official Sources Used<a href="#official-sources-used" class="hash-link" aria-label="Direct link to Official Sources Used" title="Direct link to Official Sources Used">​</a></h2>
+<ul>
+<li>Docusaurus installation:<!-- -->
+<ul>
+<li><a href="https://docusaurus.io/docs/installation" target="_blank" rel="noopener noreferrer">https://docusaurus.io/docs/installation</a></li>
+</ul>
+</li>
+<li>Docusaurus docs-only mode:<!-- -->
+<ul>
+<li><a href="https://docusaurus.io/docs/docs-introduction" target="_blank" rel="noopener noreferrer">https://docusaurus.io/docs/docs-introduction</a></li>
+</ul>
+</li>
+<li>Docusaurus doc slugs and root homepage:<!-- -->
+<ul>
+<li><a href="https://docusaurus.io/docs/create-doc" target="_blank" rel="noopener noreferrer">https://docusaurus.io/docs/create-doc</a></li>
+</ul>
+</li>
+<li>Docusaurus deployment:<!-- -->
+<ul>
+<li><a href="https://docusaurus.io/docs/deployment" target="_blank" rel="noopener noreferrer">https://docusaurus.io/docs/deployment</a></li>
+</ul>
+</li>
+<li>GitHub Pages publishing source:<!-- -->
+<ul>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site</a></li>
+</ul>
+</li>
+<li>GitHub Pages custom workflows:<!-- -->
+<ul>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages</a></li>
+</ul>
+</li>
+<li>GitHub Pages custom domain:<!-- -->
+<ul>
+<li><a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site</a></li>
+</ul>
+</li>
+</ul></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/apicostx-docs/auth-security-report"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">ACM2 Authentication &amp; Security Report</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#what-we-are-building" class="table-of-contents__link toc-highlight">What We Are Building</a></li><li><a href="#main-recommendation" class="table-of-contents__link toc-highlight">Main Recommendation</a></li><li><a href="#recommended-folder-shape" class="table-of-contents__link toc-highlight">Recommended Folder Shape</a></li><li><a href="#recommended-docusaurus-setup" class="table-of-contents__link toc-highlight">Recommended Docusaurus Setup</a></li><li><a href="#exact-repo-shape-to-target" class="table-of-contents__link toc-highlight">Exact Repo Shape To Target</a></li><li><a href="#exact-docusaurus-config-decisions" class="table-of-contents__link toc-highlight">Exact Docusaurus Config Decisions</a></li><li><a href="#exact-github-actions-shape" class="table-of-contents__link toc-highlight">Exact GitHub Actions Shape</a></li><li><a href="#recommended-information-architecture" class="table-of-contents__link toc-highlight">Recommended Information Architecture</a></li><li><a href="#recommended-github-pages-approach" class="table-of-contents__link toc-highlight">Recommended GitHub Pages Approach</a></li><li><a href="#recommended-github-actions-flow" class="table-of-contents__link toc-highlight">Recommended GitHub Actions Flow</a><ul><li><a href="#build-job" class="table-of-contents__link toc-highlight">Build job</a></li><li><a href="#deploy-job" class="table-of-contents__link toc-highlight">Deploy job</a></li></ul></li><li><a href="#recommended-action-versions" class="table-of-contents__link toc-highlight">Recommended Action Versions</a></li><li><a href="#recommended-docusaurus-config-decisions" class="table-of-contents__link toc-highlight">Recommended Docusaurus Config Decisions</a></li><li><a href="#custom-domain-plan" class="table-of-contents__link toc-highlight">Custom Domain Plan</a></li><li><a href="#content-migration-plan" class="table-of-contents__link toc-highlight">Content Migration Plan</a><ul><li><a href="#stage-1" class="table-of-contents__link toc-highlight">Stage 1</a></li><li><a href="#stage-2" class="table-of-contents__link toc-highlight">Stage 2</a></li><li><a href="#stage-3" class="table-of-contents__link toc-highlight">Stage 3</a></li><li><a href="#stage-4" class="table-of-contents__link toc-highlight">Stage 4</a></li></ul></li><li><a href="#recommended-content-structure-inside-docusaurus" class="table-of-contents__link toc-highlight">Recommended Content Structure Inside Docusaurus</a></li><li><a href="#recommended-build-and-local-dev-flow" class="table-of-contents__link toc-highlight">Recommended Build and Local Dev Flow</a></li><li><a href="#open-decisions-we-need-before-implementation" class="table-of-contents__link toc-highlight">Open Decisions We Need Before Implementation</a></li><li><a href="#recommended-answers" class="table-of-contents__link toc-highlight">Recommended Answers</a></li><li><a href="#implementation-phases" class="table-of-contents__link toc-highlight">Implementation Phases</a><ul><li><a href="#phase-1-scaffold" class="table-of-contents__link toc-highlight">Phase 1: Scaffold</a></li><li><a href="#phase-2-shape-the-site" class="table-of-contents__link toc-highlight">Phase 2: Shape the site</a></li><li><a href="#phase-3-deploy" class="table-of-contents__link toc-highlight">Phase 3: Deploy</a></li><li><a href="#phase-4-harden-and-polish" class="table-of-contents__link toc-highlight">Phase 4: Harden and polish</a></li></ul></li><li><a href="#success-checklist" class="table-of-contents__link toc-highlight">Success Checklist</a></li><li><a href="#official-sources-used" class="table-of-contents__link toc-highlight">Official Sources Used</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Start Here</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/help">Help Center</a></li><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/help/getting-started">Getting Started</a></li><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/quickstart">Quickstart</a></li></ul></div><div class="col footer__col"><div class="footer__title">Guides</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/users/app-overview">Users</a></li><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/admins/frontend-operations">Admins</a></li><li class="footer__item"><a class="footer__link-item" href="/apicostx-docs/devs/frontend">Developers</a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright 2026 ACM Docs</div></div></div></footer></div>
+</body>
+</html>
