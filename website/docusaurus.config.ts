@@ -44,6 +44,11 @@ const config: Config = {
   ],
   themeConfig: {
     image: 'img/social-card.svg',
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
       title: 'API Cost X',
       items: [
