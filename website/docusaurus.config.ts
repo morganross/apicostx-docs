@@ -14,6 +14,9 @@ const config: Config = {
   url,
   baseUrl,
   trailingSlash: false,
+  stylesheets: [
+    'https://apicostx.com/wp-content/themes/twentytwentyfive/assets/css/acx-shared-fonts.css',
+  ],
   organizationName,
   projectName,
   onBrokenLinks: 'throw',
