@@ -1,0 +1,59 @@
+:root {
+  --ifm-color-primary: #0d5c63;
+  --ifm-color-primary-dark: #0b5359;
+  --ifm-color-primary-darker: #0a4f55;
+  --ifm-color-primary-darkest: #083f44;
+  --ifm-color-primary-light: #0f656d;
+  --ifm-color-primary-lighter: #116a72;
+  --ifm-color-primary-lightest: #15808a;
+  --ifm-background-color: #f6f2ea;
+  --ifm-navbar-background-color: rgba(246, 242, 234, 0.9);
+  --ifm-footer-background-color: #16302b;
+  --ifm-heading-color: #1e2421;
+  --ifm-font-family-base: "Source Sans 3", "Segoe UI", sans-serif;
+  --ifm-font-family-monospace: "IBM Plex Mono", Consolas, monospace;
+  --ifm-code-font-size: 95%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, rgba(13, 92, 99, 0.12), transparent 32%),
+    linear-gradient(180deg, #fcfaf4 0%, #f6f2ea 100%);
+}
+
+.navbar {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(22, 48, 43, 0.08);
+}
+
+.hero,
+.main-wrapper {
+  position: relative;
+}
+
+.theme-doc-markdown {
+  max-width: 78ch;
+}
+
+.theme-doc-markdown h1,
+.theme-doc-markdown h2,
+.theme-doc-markdown h3 {
+  letter-spacing: -0.02em;
+}
+
+.pagination-nav__link {
+  border-color: rgba(13, 92, 99, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.table-of-contents__link--active {
+  font-weight: 700;
+}
+
+svg[class*='iconExternalLink'] {
+  color: var(--ifm-color-primary);
+}

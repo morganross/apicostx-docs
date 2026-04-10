@@ -1,0 +1,8 @@
+{
+  "label": "Help",
+  "position": 2,
+  "link": {
+    "type": "doc",
+    "id": "help/README"
+  }
+}
