@@ -1,13 +1,12 @@
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const repository = process.env.GITHUB_REPOSITORY ?? 'your-org/your-repo';
+const repository = process.env.GITHUB_REPOSITORY ?? 'morganross/apicostx-docs';
 const [organizationName, projectName] = repository.split('/');
-const isUserOrOrgPagesSite = projectName === `${organizationName}.github.io`;
-const url = process.env.DOCS_SITE_URL ?? `https://${organizationName}.github.io`;
-const baseUrl =
-  process.env.DOCS_BASE_URL ??
-  (isUserOrOrgPagesSite ? '/' : `/${projectName}/`);
+const defaultSiteUrl = 'https://apicostx.com';
+const defaultBaseUrl = '/docs-static/';
+const url = process.env.DOCS_SITE_URL ?? defaultSiteUrl;
+const baseUrl = process.env.DOCS_BASE_URL ?? defaultBaseUrl;
 
 const config: Config = {
   title: 'ACM Documentation',

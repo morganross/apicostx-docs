@@ -7,26 +7,25 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: docs-static-branch
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
+    env:
+      DOCS_SITE_URL: ${{ vars.DOCS_SITE_URL }}
+      DOCS_BASE_URL: ${{ vars.DOCS_BASE_URL }}
+      DOCS_DEPLOY_BRANCH: ${{ vars.DOCS_DEPLOY_BRANCH }}
     defaults:
       run:
         working-directory: website
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -43,18 +42,31 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: npm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: website/build
+      - name: Publish built static files to deploy branch
+        working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          BRANCH="${DOCS_DEPLOY_BRANCH:-gh-pages}"
+          BUILD_DIR="${GITHUB_WORKSPACE}/website/build"
+          PUBLISH_DIR="$(mktemp -d)"
+
+          if [ ! -f "${BUILD_DIR}/index.html" ]; then
+            echo "Expected built docs at ${BUILD_DIR}/index.html" >&2
+            exit 1
+          fi
+
+          cp -a "${BUILD_DIR}/." "${PUBLISH_DIR}/"
+          touch "${PUBLISH_DIR}/.nojekyll"
+
+          cd "${PUBLISH_DIR}"
+          git init
+          git checkout -b "${BRANCH}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Publish docs for ${GITHUB_SHA}"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin "HEAD:${BRANCH}"
