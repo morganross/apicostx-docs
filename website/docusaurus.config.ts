@@ -55,21 +55,23 @@ const config: Config = {
     navbar: {
       title: 'API Cost X',
       items: [
-        {href: 'https://apicostx.com/about/', position: 'right', label: 'About'},
+        {href: 'https://apicostx.com/about/', position: 'right', label: 'About', target: '_self'},
         {
           href: 'https://apicostx.com/membership-levels/',
           position: 'right',
           label: 'Pricing',
+          target: '_self',
         },
-        {href: 'https://apicostx.com/app/', position: 'right', label: 'APP'},
-        {href: 'https://apicostx.com/login/', position: 'right', label: 'Log In'},
+        {href: 'https://apicostx.com/app/', position: 'right', label: 'APP', target: '_self'},
+        {href: 'https://apicostx.com/login/', position: 'right', label: 'Log In', target: '_self'},
         {
           to: '/',
           position: 'right',
           label: 'Docs',
+          className: 'acx-navbar-docs-link',
         },
-        {href: 'https://apicostx.com/security/', position: 'right', label: 'Security'},
-        {href: 'https://apicostx.com/credits/', position: 'right', label: 'Buy Credits'},
+        {href: 'https://apicostx.com/security/', position: 'right', label: 'Security', target: '_self'},
+        {href: 'https://apicostx.com/credits/', position: 'right', label: 'Buy Credits', target: '_self'},
       ],
     },
     footer: {
