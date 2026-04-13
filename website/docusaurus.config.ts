@@ -78,23 +78,24 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Start Here',
+          title: 'Main',
           items: [
-            {label: 'Help Center', to: '/help'},
-            {label: 'Getting Started', to: '/help/getting-started'},
-            {label: 'Quickstart', to: '/quickstart'},
+            {label: 'About', href: 'https://apicostx.com/about/'},
+            {label: 'Pricing', href: 'https://apicostx.com/membership-levels/'},
+            {label: 'APP', href: 'https://apicostx.com/app/'},
+            {label: 'Docs', to: '/'},
           ],
         },
         {
-          title: 'Guides',
+          title: 'Account',
           items: [
-            {label: 'Users', to: '/users/app-overview'},
-            {label: 'Admins', to: '/admins/frontend-operations'},
-            {label: 'Developers', to: '/devs/frontend'},
+            {label: 'Security', href: 'https://apicostx.com/security/'},
+            {label: 'Buy Credits', href: 'https://apicostx.com/credits/'},
+            {label: 'Log In', href: 'https://apicostx.com/login/'},
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()} ACM Docs`,
+      copyright: `Copyright ${new Date().getFullYear()} API Cost X`,
     },
     prism: {
       additionalLanguages: ['bash', 'json'],
