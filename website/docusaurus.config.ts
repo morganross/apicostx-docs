@@ -55,7 +55,6 @@ const config: Config = {
     navbar: {
       title: 'API Cost X',
       items: [
-        {href: 'https://apicostx.com/about/', position: 'right', label: 'About', target: '_self'},
         {
           href: 'https://apicostx.com/membership-levels/',
           position: 'right',
@@ -63,7 +62,6 @@ const config: Config = {
           target: '_self',
         },
         {href: 'https://apicostx.com/app/', position: 'right', label: 'APP', target: '_self'},
-        {href: 'https://apicostx.com/login/', position: 'right', label: 'Log In', target: '_self'},
         {
           to: '/',
           position: 'right',
