@@ -69,7 +69,6 @@ const config: Config = {
           className: 'acx-navbar-docs-link',
         },
         {href: 'https://apicostx.com/security/', position: 'right', label: 'Security', target: '_self'},
-        {href: 'https://apicostx.com/credits/', position: 'right', label: 'Buy Credits', target: '_self'},
       ],
     },
     footer: {
@@ -88,7 +87,6 @@ const config: Config = {
           title: 'Account',
           items: [
             {label: 'Security', href: 'https://apicostx.com/security/'},
-            {label: 'Buy Credits', href: 'https://apicostx.com/credits/'},
             {label: 'Log In', href: 'https://apicostx.com/login/'},
           ],
         },
