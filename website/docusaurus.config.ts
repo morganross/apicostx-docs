@@ -62,13 +62,26 @@ const config: Config = {
           target: '_self',
         },
         {href: 'https://apicostx.com/app/', position: 'right', label: 'APP', target: '_self'},
+        {href: 'https://apicostx.com/login/', position: 'right', label: 'Log In', target: '_self'},
         {
           to: '/',
           position: 'right',
           label: 'Docs',
           className: 'acx-navbar-docs-link',
         },
-        {href: 'https://apicostx.com/security/', position: 'right', label: 'Security', target: '_self'},
+        {
+          type: 'dropdown',
+          position: 'right',
+          label: 'Resources',
+          className: 'acx-navbar-resources-link',
+          items: [
+            {label: 'About', href: 'https://apicostx.com/about/', target: '_self'},
+            {label: 'Contact', href: 'https://apicostx.com/contact/', target: '_self'},
+            {label: 'Support', href: 'https://apicostx.com/support/', target: '_self'},
+            {label: 'Company', href: 'https://apicostx.com/company/', target: '_self'},
+            {label: 'Legal', href: 'https://apicostx.com/legal/', target: '_self'},
+          ],
+        },
       ],
     },
     footer: {
@@ -77,17 +90,20 @@ const config: Config = {
         {
           title: 'Main',
           items: [
-            {label: 'About', href: 'https://apicostx.com/about/'},
             {label: 'Pricing', href: 'https://apicostx.com/membership-levels/'},
             {label: 'APP', href: 'https://apicostx.com/app/'},
+            {label: 'Log In', href: 'https://apicostx.com/login/'},
             {label: 'Docs', to: '/'},
           ],
         },
         {
-          title: 'Account',
+          title: 'Resources',
           items: [
-            {label: 'Security', href: 'https://apicostx.com/security/'},
-            {label: 'Log In', href: 'https://apicostx.com/login/'},
+            {label: 'About', href: 'https://apicostx.com/about/'},
+            {label: 'Contact', href: 'https://apicostx.com/contact/'},
+            {label: 'Support', href: 'https://apicostx.com/support/'},
+            {label: 'Company', href: 'https://apicostx.com/company/'},
+            {label: 'Legal', href: 'https://apicostx.com/legal/'},
           ],
         },
       ],
