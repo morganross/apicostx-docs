@@ -25,7 +25,7 @@ This is the fastest way to inspect startup failures and crash loops.
 - plugin secret invalid or missing
 - report generation failure for a specific run
 - duplicate free/paid DB state for one UUID
-- password rekey failed because old key was not cached
+- password change or reset refused by the backend (wrong current password or wrong recovery code)
 
 ## First Debug Checks
 

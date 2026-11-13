@@ -14,6 +14,9 @@ All routes are under `/api`.
 - `POST /auth/login`
 - `POST /auth/refresh`
 - `POST /auth/rekey`
+- `POST /auth/recover`
+- `POST /auth/reset-account`
+- `POST /auth/logout`
 
 ## Users
 

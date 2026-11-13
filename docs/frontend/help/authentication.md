@@ -28,7 +28,9 @@ This is used for actions like:
 - user creation
 - login token exchange
 - refresh
-- password rekey
+- password change (`/auth/rekey`)
+- password reset with a recovery code (`/auth/recover`)
+- password reset without one (`/auth/reset-account`)
 - membership activate/deactivate
 - credit addition
 - backend user deletion

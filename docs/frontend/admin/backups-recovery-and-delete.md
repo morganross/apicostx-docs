@@ -6,15 +6,15 @@ The backend stores user state in three main places:
 
 - per-user encrypted DB files: `paid_{uuid}.db` or `free_{uuid}.db`
 - per-user runtime/artifact directories: `data/user_{uuid}/runs/...`
-- recovery files: `data/user_{uuid}.recovery`
+- wrapped key files: `data/wrapped_decode_keys/user_{uuid}.json`
 
 There is also a shared credits DB and shared logs for operator review.
 
-## Recovery Files
+## Wrapped Key Files
 
-`user_{uuid}.recovery` contains a wrapped copy of the user's DB key.
+`wrapped_decode_keys/user_{uuid}.json` contains the wrapped copies of the user's data key: one opened by the password and one opened by the recovery code.
 
-It is sensitive and should be handled like a recovery secret, not as ordinary content.
+It is sensitive and should be handled like a recovery secret, not as ordinary content. Without it the user's encrypted data cannot be opened by anyone.
 
 ## Delete Behavior
 
@@ -22,7 +22,7 @@ The backend delete endpoint removes:
 
 - active free/paid DB files and sidecars
 - legacy `user_{uuid}.db` if present
-- `user_{uuid}.recovery`
+- `wrapped_decode_keys/user_{uuid}.json`
 - `data/user_{uuid}/`
 - `shared_logs/{uuid}_*.json`
 

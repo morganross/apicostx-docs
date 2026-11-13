@@ -23,13 +23,13 @@ The backend also uses:
 
 - `data/user_{uuid}/runs/{run_id}/...`
 - `data/user_{uuid}/logs.db`
-- `data/user_{uuid}.recovery`
+- `data/wrapped_decode_keys/user_{uuid}.json`
 
 ## Encryption
 
 Per-user DBs are SQLCipher-encrypted.
 
-The DB key is derived from password material on the WordPress side and cached in backend RAM before the DB is opened.
+The data key is random and is made at signup. At login the backend opens its stored, wrapped copy with the unlock key that WordPress derives from the hashed password, and holds the data key in RAM.
 
 ## Shared Data
 

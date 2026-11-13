@@ -32,7 +32,7 @@ Report generation depends on normalized run-result data and the run's stored con
 
 ## “Password changed and now access is broken”
 
-If the backend no longer had the old DB key in RAM, automatic rekey may have failed with `409`.
+A password change or reset calls the backend before WordPress changes the password. If the backend refuses or cannot be reached, the old password keeps working.
 
-That is when recovery-code flow matters.
+If the user cannot log in after a reset, check how the password was set. A password set outside the site's own forms (WP-CLI, a database edit, wp-admin) was not hashed by the browser and cannot log in. The user must reset it from the emailed link, with the recovery code to keep saved data or with the erase option to start fresh.
 

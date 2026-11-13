@@ -4,14 +4,17 @@
 
 WordPress is the login system.
 
-After WordPress authenticates the user, the plugin derives the user's DB key from the password hash material and calls `POST /api/auth/login`.
+The browser hashes the password with SHA-256 before the form is sent. WordPress never receives the password itself and refuses a login that was not hashed. JavaScript must be on.
+
+After WordPress authenticates the user, the plugin derives an unlock key from the hashed password and calls `POST /api/auth/login`.
 
 The backend:
 
 1. validates the plugin secret
-2. caches the user's DB key in RAM
-3. verifies the encrypted DB opens
-4. returns a signed 1-hour session token
+2. uses the unlock key to open the stored, wrapped copy of the user's data key
+3. holds the data key in RAM
+4. confirms the user's encrypted data opens
+5. returns a signed 1-hour session token
 
 That session token is what the frontend app uses for API requests.
 
@@ -19,26 +22,30 @@ That session token is what the frontend app uses for API requests.
 
 When the WordPress transient expires, the plugin calls `POST /api/auth/refresh`.
 
-Refresh only works if the backend still has the user's DB key cached in RAM. After a backend restart, users generally need to log into WordPress again.
-
-## Password Change And Reset
-
-There are two important paths:
-
-- password reset flow
-- logged-in password change flow
-
-The plugin now handles both by posting the new DB key to `POST /api/auth/rekey`.
+Refresh only works if the backend still has the user's data key in RAM. After a backend restart, a logout, or a long idle period, users need to log into WordPress again.
 
 ## Recovery Code
 
-The backend generates a recovery code when the user is first provisioned and again after a successful rekey.
+The backend issues a recovery code when the user signs up, and a new one after every password change, recovery or account reset. A new code replaces the old one.
 
-The recovery file on disk stores the wrapped DB key. The recovery code is shown once to the user by the WordPress layer and should be saved outside the app.
+The code is shown once by WordPress and should be saved outside the app. It is the only way to keep saved data after a forgotten password.
 
-## Failure Case
+## Changing The Password While Logged In
 
-If the backend no longer has the old DB key in RAM when a password change happens, rekey returns `409`.
+The profile page asks for the current password and the new one. The plugin calls `POST /api/auth/rekey` with the unlock keys for both.
 
-That is a real limitation of the design: the system cannot re-encrypt the DB without the old key.
+Saved data is kept. Every open session is signed out, and a new recovery code is shown.
 
+## Forgotten Password
+
+The reset link in the email opens a form with the new password and a choice:
+
+- **Enter the recovery code.** The plugin calls `POST /api/auth/recover`. Saved data is kept and a new recovery code is shown. A wrong code is reported and the old password still works.
+- **Tick "Erase my saved data and start fresh".** The plugin calls `POST /api/auth/reset-account`. Saved data is deleted and cannot be brought back. The credit balance and membership are kept.
+
+One of the two is required.
+
+## What Does Not Work
+
+- Resetting the password from WordPress's own `wp-login.php` form is refused. Use the link in the reset email.
+- A site admin cannot set a new password for a user from wp-admin if that user has ACM data.

@@ -24,11 +24,17 @@ The requested run does not exist in the current user's DB.
 
 This often means the frontend is looking at a stale run ID or the wrong account.
 
-## `409 Old DB key not cached`
+## `401 Current password is incorrect`
 
-Password rekey was attempted, but the backend no longer had the old encryption key in RAM.
+A logged-in password change was attempted, but the current password did not open the user's data key.
 
-This means normal automatic rekey cannot proceed and recovery-code flow is required.
+Nothing was changed. The user should retype the current password.
+
+## `401 Recovery code is incorrect`
+
+A password reset was attempted with a recovery code that did not open the user's data key.
+
+Nothing was changed and the old password still works. The user can retry, or choose to erase their saved data and start fresh.
 
 ## `500 Failed to generate report`
 

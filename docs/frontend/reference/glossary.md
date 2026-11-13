@@ -10,11 +10,15 @@ A shared secret used by the WordPress plugin for privileged server-to-server bac
 
 ## DB Key
 
-The 32-byte SQLCipher key derived from password material and cached in backend RAM.
+The 32-byte random data key made at signup. It encrypts the user's protected data and is held in backend RAM while the user is active.
+
+## Unlock Key
+
+The 32-byte key WordPress derives from the browser-hashed password. It opens the stored, wrapped copy of the DB key. It is sent as `db_key_hex`.
 
 ## Recovery Code
 
-A user-facing secret that unwraps the stored recovery file and can recover access to encrypted data.
+A user-facing secret that opens the recovery copy of the DB key, so saved data survives a forgotten password. A new one is issued after every password change, recovery or account reset.
 
 ## Session Token
 

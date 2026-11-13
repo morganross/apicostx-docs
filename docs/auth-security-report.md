@@ -1,275 +1,177 @@
 # ACM2 Authentication & Security Report
 
-**Date:** April 8, 2026  
-**Scope:** Backend authentication flow, session token design, key management, multi-process readiness
+**Updated:** November 12, 2026
+**Scope:** Password handling, the per-user data key, session tokens, password change, reset and recovery
 
 ---
 
 ## 1. System Overview
 
-ACM2 uses a **per-user encrypted SQLite database** (SQLCipher) architecture. Each user's data is encrypted at rest with a 32-byte key that is mathematically derived from their WordPress password. The backend never stores the plaintext password or the raw DB key on disk — only in RAM, temporarily, per session.
+Each user's protected data is stored in MariaDB as ciphertext. It is encrypted with a **data key**: 32 random bytes made when the user signs up.
 
-This is an unusually strong privacy design: a compromised server disk reveals nothing without the user's password. The tradeoff is architectural complexity in the authentication flow.
+The backend never stores the data key in the clear. It stores wrapped copies of it, and each copy can only be opened with a secret the user holds:
+
+| Wrapped copy | Opened by |
+|--------------|-----------|
+| Password copy | The unlock key derived from the user's password |
+| Recovery copy | The recovery code shown to the user once |
+| API key copy (one per API key) | That API key's secret |
+
+The opened data key lives in backend RAM only while the user is active. A copy of the server's disk holds ciphertext and wrapped keys, and nothing that opens them.
 
 ---
 
-## 2. Full Authentication Sequence
-
-### Step 1 — WordPress Login (once per session)
+## 2. From Password To Data
 
 ```
-User types password into WordPress login form
+User types a password into a WordPress form
     │
-    ├─ Browser JS: sha256(password) → "a1b2c3..."  (sent in $_POST['pwd'])
+    ├─ Browser (assets/js/login-hash.js):
+    │       hash = SHA-256(password), sent as 64 lowercase hex characters
+    │       The server never receives the password itself.
     │
-    ├─ PHP (class-user-sync.php::on_wp_login):
-    │       db_key = PBKDF2-SHA256(sha256(password), user_uuid, 600,000 iterations, 32 bytes)
-    │       — deterministic: same password + same UUID = same 32-byte key, always
-    │       — 600k iterations makes brute-force expensive
+    ├─ WordPress (class-user-sync.php):
+    │       Refuses any value that is not 64 lowercase hex characters.
+    │       unlock_key = PBKDF2-SHA256(hash, user_uuid, 600,000 rounds, 32 bytes)
     │
-    ├─ PHP → Backend:  POST /api/auth/login
-    │       Body:    { uuid: "abc123...", db_key_hex: "a1b2c3..." }
-    │       Header:  X-ACM2-Plugin-Secret: <shared server secret>
+    ├─ WordPress → Backend:  POST /api/auth/login
+    │       Body:    { uuid, db_key_hex: <unlock key> }
+    │       Header:  X-ACM2-Plugin-Secret
     │
     └─ Backend (auth_key.py::login):
-            1. Validates plugin_secret header
-            2. Parses db_key_hex → 32 raw bytes
-            3. Stores in RAM:  _key_cache["abc123"] = <32 bytes>
-            4. Attempts to open the user's SQLCipher .db file with this key
-               — if the DB opens: key is correct (SQLCipher format IS the hash check)
-               — if the DB fails to open: wrong key → evict from cache → 401
-            5. Issues session token:
-               payload = { uuid: "abc123", exp: now+3600, v: 1 }
-               token   = base64(payload) + "." + HMAC-SHA256(payload, plugin_secret)
-            6. Returns { session_token: "..." }
-            7. PHP stores token in WordPress DB transient (55 min TTL)
-               PHP injects into page HTML: window.acm2Config = { sessionToken: "..." }
+            1. Checks the plugin secret
+            2. Reads data/wrapped_decode_keys/user_<uuid>.json
+            3. Opens the password copy with the unlock key
+               (PBKDF2-SHA256, 600,000 rounds, then AES-256-GCM)
+               — wrong password: the copy does not open → 401
+            4. Holds the data key in RAM
+            5. Reads the user's row in MariaDB to confirm the key works
+            6. Returns a session token
 ```
 
-The browser receives the token via the page. It never sees the plugin_secret or the db_key.
+Every form that takes a password is hashed the same way: login, signup, password reset and password change. There is no server-side hashing of a plain password anywhere. A browser with JavaScript turned off cannot log in or sign up.
+
+### How the data key is used
+
+Each time a database connection is taken for a user, the backend sets the data key as a MariaDB session variable. Protected columns are written with `AES_ENCRYPT` and read with `AES_DECRYPT` using that variable. Each value is prefixed with 16 random bytes before it is encrypted.
+
+Background workers get the data key through a separate, memory-only key store that refuses to start if persistence or replication is turned on.
 
 ---
 
-### Step 2 — Every API Request (GET /runs, POST /run/start, etc.)
+## 3. Session Tokens
 
 ```
-Browser → Backend:
-    Header: X-ACM2-Session-Token: <token>
-
-Backend middleware (auth/middleware.py::get_current_user):
-    A. Check _auth_cache[token] → if hit, return cached user dict (fast path, 5 min TTL)
-    B. verify_session_token(token, plugin_secret):
-          — split token into payload_b64 + signature
-          — recompute HMAC, compare with constant-time compare_digest()
-          — decode payload, check v==1, check exp > now
-          — return uuid = "abc123"
-    C. get_cached_db_key("abc123")
-          — if None → 401 "server restarted, please re-login to WordPress"
-          — if present → continue
-    D. _get_or_create_user_engine("abc123")
-          — opens or reuses the SQLCipher connection using _key_cache key
-          — SELECT uuid FROM user_meta → confirms DB is open and readable
-    E. returns user = { uuid, membership }
-    F. _auth_cache[token] = user  (cached for 5 min to avoid repeating C-D)
+token = base64url({ uuid, exp, generation }) + "." + HMAC-SHA256(payload, ACM2_SESSION_SIGNING_SECRET)
 ```
 
----
+- A token lasts **one hour** by default (`ACM2_SESSION_TTL_SECONDS`).
+- The token is signed with its own secret, not the plugin secret.
+- `generation` is a per-user value. Changing it revokes every token issued before. Logout, password change and recovery all change it.
+- The token does not carry the data key. A valid token is only useful while the data key is in backend RAM.
 
-### Step 3 — Token Refresh (on page load when transient has expired)
+WordPress keeps the token in a transient for the same lifetime and puts it in the page as `window.acm2Config.sessionToken`.
 
-```
-PHP (class-frontend-app.php::get_session_token):
-    — WordPress transient acm2_sess_{user_id} has expired (>55 min since last load)
-    — PHP → Backend:  POST /api/auth/refresh
-          Body:    { uuid: "abc123" }
-          Header:  X-ACM2-Plugin-Secret: <shared server secret>
+### On every API request
 
-Backend (auth_key.py::refresh):
-    1. Validates plugin_secret header
-    2. Checks _key_cache["abc123"] — if None → 401 (user must re-login to WP)
-    3. If key is cached → issues new session token (no DB open, no password needed)
-    4. Returns { session_token: "...", expires_in: 3600 }
+1. The signature, expiry and generation are checked.
+2. The data key must be in RAM. If it is not, the request gets 401 and the user logs into WordPress again.
+3. The user's membership is read from their database.
+4. The result is cached for five minutes.
 
-Note: this call blocks PHP before HTML is sent to the browser (10s timeout).
-```
+### Refresh
 
----
+When the WordPress transient has expired, WordPress calls `POST /api/auth/refresh` with the plugin secret and the UUID. The backend issues a new token only if the data key is still in RAM.
 
-## 3. What Each Credential Does
+### When the data key leaves RAM
 
-| Credential | Lives Where | Used By | Purpose |
-|-----------|-------------|---------|---------|
-| `plugin_secret` | WordPress config + backend `.env` | PHP server → backend | Gate: proves call comes from our WP server, not the internet |
-| `db_key` (32 bytes) | Backend RAM only (`_key_cache`) | Backend DB layer | Decrypts each user's SQLCipher database |
-| `session_token` | WP DB transient + browser memory | Browser → backend | Identifies and authenticates the user on every API call |
-| User's password | Never stored anywhere | Only at login moment | Source material for deriving db_key |
+- The user logs out. If a run is active, the key is kept until that run finishes.
+- The user's browser tabs go idle.
+- The key has not been used for the idle limit (`ACM2_DB_KEY_CACHE_IDLE_TTL_SECONDS`).
+- The backend restarts.
 
 ---
 
-## 4. What the Session Token Is and Isn't
+## 4. Password Change, Reset And Recovery
 
-The token is **not a JWT** but follows the same pattern: a signed payload.
+The data key never changes when the password changes. Only the password copy is replaced, so no stored data is re-encrypted.
 
-```
-token = base64url({ uuid, exp, v }) + "." + HMAC-SHA256(base64url_payload, plugin_secret)
-```
+In all three cases the backend is called **before** WordPress changes the password. If the backend refuses or cannot be reached, the old password keeps working.
 
-**The token proves:** "The holder of this token is user `uuid`, and a trusted server (WP) gave it to them before `exp`."
+### Logged-in password change
 
-**The token does NOT carry:** the db_key. The db_key must already be in `_key_cache` RAM on the backend for the token to be useful. This is the architectural constraint that prevents the backend from running multiple worker processes.
+The user gives the current and the new password. WordPress derives both unlock keys and calls `POST /api/auth/rekey`.
 
----
+1. The backend opens the password copy with the old unlock key. If it does not open: 401.
+2. It stores a new password copy under the new unlock key.
+3. It issues a new recovery code. The old code stops working.
+4. It revokes every session.
 
-## 5. Security Analysis
+### Forgotten password, with the recovery code
 
-### 5.1 Strengths
+The reset form asks for the new password and the recovery code. WordPress calls `POST /api/auth/recover`.
 
-**Password never stored.** The raw password is used for one PBKDF2 computation then discarded. Not stored on disk anywhere.
+1. The backend opens the recovery copy with the code. If it does not open: 401, and the failure counts toward the caller's rate limit.
+2. It stores a new password copy under the new unlock key.
+3. It issues a new recovery code. The used code stops working.
+4. It revokes every session and drops the data key from RAM.
 
-**DB key never on disk.** `_key_cache` is a Python dict in RAM only. A disk image of the server reveals no keys.
+### Forgotten password, without the recovery code
 
-**SQLCipher opens = the hash check.** The backend doesn't need to store a bcrypt hash to verify the password. The DB file itself is the verifier — if PBKDF2(password, uuid) produces the wrong key, SQLCipher silently decrypts garbage and the `SELECT 1` fails. This is equivalent to a stored hash but with an additional layer (the 32-byte key also opens the encrypted data).
+The user ticks "Erase my saved data and start fresh". WordPress calls `POST /api/auth/reset-account`.
 
-**HMAC token forgery resistance.** Tokens are verified with `hmac.compare_digest()` (constant-time) — immune to timing attacks. Forging a token requires knowing `plugin_secret`.
+The old data key cannot be recovered, so the encrypted data is deleted. The account is made again under the new password with a new data key and a new recovery code. **The credit balance and membership are kept.**
 
-**Key never logged.** All log lines reference only the last 8 chars of UUID. `db_key_hex` never appears in any log statement.
+### Routes that are closed
 
-**HTTPS everywhere.** The db_key transits in a POST body but only over TLS. Cloudflare sits in front.
+- WordPress's own reset form (`wp-login.php`) is refused.
+- A password typed into a wp-admin profile screen is refused for an account that has ACM data.
 
----
-
-### 5.2 Weaknesses
-
-#### W1 — `plugin_secret` is a single key with too much power (Medium)
-
-`plugin_secret` authorises all of the following:
-
-| Endpoint | Effect |
-|----------|--------|
-| `POST /api/auth/login` | Deliver DB key, get token for any user |
-| `POST /api/auth/refresh` | Get a token for any user whose key is in RAM |
-| `POST /api/auth/rekey` | Re-encrypt any user's database |
-| `POST /api/users` | Create user accounts |
-| `POST /api/users/{uuid}/activate` | Upgrade any user to paid |
-| `POST /api/users/{uuid}/deactivate` | Downgrade any user |
-| `POST /api/credits/add` | Add credits to any account |
-
-A single leaked secret grants full control over every user and every account operation. There is no scope separation.
-
-**Blast radius of a leaked `plugin_secret`:**
-- Attacker can call `/auth/refresh` for any UUID whose key is currently in `_key_cache`
-- Attacker gets a valid session token → can read/write that user's entire dataset
-- Attacker can add credits to accounts or downgrade paid users
-- Attacker cannot access users whose key is NOT in cache (backend restart clears all keys)
-
-**Recommended fix:** Split into two secrets:
-- `PLUGIN_ADMIN_SECRET` — user provisioning and membership management only
-- `PLUGIN_SESSION_SECRET` — auth/login, auth/refresh, auth/rekey only
-
-Leaking the admin key can't impersonate users. Leaking the session key can't create accounts or modify memberships.
+Neither can replace the password copy, so allowing them would leave the account unable to open its data. A password set outside the forms (WP-CLI, a database edit) cannot log in until it is reset by email.
 
 ---
 
-#### W2 — `/auth/refresh` requires no password proof (Low-Medium)
+## 5. What Each Secret Does
 
-`/auth/refresh` issues a session token using only `plugin_secret + uuid`. It implicitly relies on `_key_cache` as a second factor (if the key isn't in RAM, it returns 401). But the key being in RAM just means "this user logged in since the last server restart" — not that the calling process is authorised on behalf of that specific user.
-
-If `plugin_secret` leaks, an attacker can enumerate UUIDs (they're stored in WordPress user meta — a separate concern) and call `/auth/refresh` for any user currently active. 
-
-**Mitigating factor:** attack window is only while keys are in RAM (cleared on restart) and attacker must know specific UUIDs.
-
-**Recommended fix:** `/auth/refresh` should require either:
-- The current (still-valid) session token as proof of prior auth, **or**
-- The `db_key_hex` again (re-prove you know the password)
-
-Currently it requires neither.
+| Secret | Lives where | Purpose |
+|--------|-------------|---------|
+| User's password | Nowhere. Hashed in the browser. | Source of the unlock key |
+| Unlock key | Sent from WordPress to the backend at login, change and reset. Not stored. | Opens the password copy of the data key |
+| Data key | Backend RAM while the user is active | Encrypts and decrypts the user's protected columns |
+| Recovery code | Shown once to the user | Opens the recovery copy of the data key |
+| API key secret | Held by the user | Opens that API key's copy of the data key |
+| `ACM2_PLUGIN_SECRET` | WordPress config and backend environment | Proves a call comes from the WordPress server |
+| `ACM2_SESSION_SIGNING_SECRET` | Backend environment | Signs session tokens |
 
 ---
 
-#### W3 — No rate limiting on auth endpoints (Medium)
+## 6. Abuse Limits
 
-`POST /api/auth/login`, `/auth/refresh`, `/auth/rekey` have no per-IP or per-UUID rate limiting at the application layer. Cloudflare provides some DDoS protection but not application-layer throttling.
-
-**Consequences without `plugin_secret` leaking:** Limited — the endpoint requires the secret, so random internet traffic is rejected immediately.
-
-**Consequences with `plugin_secret` leaked:** An attacker could call `/auth/refresh` in a tight loop for every known UUID with no throttling.
-
-**Recommended fix:** Cloudflare WAF rule — rate limit `POST /api/auth/*` to 10 requests/minute per IP. Zero code changes required. Free tier supports it.
+Failed plugin-secret checks and wrong recovery codes are counted per caller IP. Too many failures inside the window (`ACM2_AUTH_FAILURE_WINDOW_SECONDS`) block that IP for a period (`ACM2_AUTH_FAILURE_BLOCK_SECONDS`).
 
 ---
 
-#### W4 — `_key_cache` prevents horizontal scaling (Architectural)
+## 7. Notes Carried Over From The April Report
 
-The DB encryption key is stored only in one process's RAM. Multiple `uvicorn --workers N` processes each have their own copy of `_key_cache`. A user whose login was handled by worker #1 gets a `RuntimeError: No encryption key cached` on any request routed to worker #2.
+These points from the earlier report still describe the running system.
 
-**Current mitigating factor:** uvicorn already runs with `--loop auto`, which selects uvloop (already installed). Single-process async handles significant concurrent load.
-
-**To enable multi-process:** Embed an AES-wrapped copy of the db_key inside the session token payload. Every worker decrypts it from the token on each request. `_key_cache` becomes a performance cache only (no longer required for correctness). This requires a one-time token version bump (v1 → v2) and changes to `create_session_token`, `verify_session_token`, and `get_current_user` middleware.
-
----
-
-#### W5 — PHP blocking auth call on page load (Low, situational)
-
-`class-frontend-app.php` calls `POST /api/auth/refresh` synchronously before sending any HTML to the browser (10-second timeout). In normal operation the WordPress transient is warm (55-min TTL) and this call is skipped entirely. On transient miss, if the backend is degraded, users see a blank screen for up to 10 seconds.
-
-**Practical frequency:** Once per user per ~55 minutes of active usage. Not per page navigation.
+- **The plugin secret covers many actions.** It authorises login, refresh, password change, recovery, account reset, user creation, membership changes and credit additions.
+- **Refresh needs no proof of the password.** `POST /api/auth/refresh` needs the plugin secret, the UUID, and the data key already in RAM.
+- **Refresh blocks the page.** On a transient miss, WordPress calls the backend before it sends the page.
+- **Session tokens sit in the WordPress database** as transients, readable by anyone with access to that database.
 
 ---
 
-#### W6 — Session tokens stored unencrypted in WordPress DB (Low)
+## 8. Source Files
 
-`set_transient('acm2_sess_{user_id}', $token, 55*MINUTE)` stores the session token in the WordPress MySQL database in plaintext. A MySQL breach means an attacker gets valid tokens for all active users without needing `plugin_secret`.
-
-**Mitigating factor:** MySQL access = full WordPress site compromise anyway. This doesn't add meaningfully to the blast radius of a MySQL breach.
-
----
-
-## 6. Threat Model Summary
-
-| Attack | Requires | Impact | Likelihood |
-|--------|----------|--------|------------|
-| Forge session token | `plugin_secret` | Full user impersonation | Low (server-side secret) |
-| Get token for active user | `plugin_secret` + known UUID + key in cache | Read/write user data | Low |
-| Create fake accounts | `plugin_secret` | Account spam | Low |
-| Add credits to account | `plugin_secret` | Financial loss | Low |
-| Brute-force DB key | UUID + PBKDF2 cracking (600k iterations) | Full data access | Very Low |
-| Disk theft of server | Physical access | Nothing (keys not on disk) | Very Low |
-| Read data from DB file directly | SQLCipher key | Full data access | Very Low (key never on disk) |
-| MySQL breach | MySQL credentials | Active session tokens only | Low-Medium |
-
----
-
-## 7. Recommended Changes (Priority Order)
-
-### P1 — Cloudflare WAF rate limit on `/api/auth/*` (easy, no code)
-
-Add a Cloudflare WAF custom rule:
-- Match: `http.request.uri.path contains "/api/auth/"` AND `http.request.method eq "POST"`
-- Action: Rate limit — 10 requests per minute per IP
-- This closes W3 with zero backend changes.
-
-### P2 — Split `plugin_secret` into two secrets (medium, backend + PHP)
-
-Create `PLUGIN_ADMIN_SECRET` and `PLUGIN_SESSION_SECRET` in `.env` and WordPress config. Admin endpoints use admin secret; auth endpoints use session secret. Limits blast radius of either leaking. Token HMAC signing moves to session secret.
-
-### P3 — Strengthen `/auth/refresh` to require the current token (medium, backend only)
-
-Change `POST /api/auth/refresh` body from `{ uuid }` to `{ uuid, current_token }`. Verify `current_token` is a valid, non-expired session token before issuing a new one. Now `/auth/refresh` can't be called without proof of prior legitimate auth. `plugin_secret` alone is no longer sufficient for impersonation.
-
-### P4 — Embed wrapped db_key in session token (larger refactor, enables multi-process)
-
-Token v2 payload:
-```json
-{ "uuid": "...", "exp": 1234567890, "v": 2, "k": "<AES256-GCM(db_key, TOKEN_WRAP_KEY)>" }
-```
-Where `TOKEN_WRAP_KEY` is a separate secret in `.env`. `get_current_user` middleware decrypts `k` on every request and calls `cache_db_key()` from the token — no login required for the key to be available. `_key_cache` becomes optional (performance only). Backend can then run `--workers N` safely.
-
----
-
-## 8. What Is NOT a Vulnerability
-
-- **The PBKDF2 key derivation:** 600,000 iterations with user UUID as salt is solid. Standard, well-reviewed algorithm.
-- **The HMAC token signature:** constant-time comparison, SHA-256, standard pattern.
-- **db_key transit:** POST body over HTTPS with Cloudflare TLS termination.
-- **db_key in logs:** confirmed absent from all log statements.
-- **SQLCipher as the hash check:** using the DB open itself as key verification is clean and avoids storing a separate hash.
+| File | Role |
+|------|------|
+| `acm-wordpress-plugin/assets/js/login-hash.js` | Hashes every password form in the browser |
+| `acm-wordpress-plugin/includes/class-user-sync.php` | Derives the unlock key; login, signup, change and reset handlers |
+| `acm2/app/api/routes/auth_key.py` | Login, refresh, rekey, recover, reset-account, logout; session tokens |
+| `acm2/app/services/db_key_wrapping.py` | Reads and writes the wrapped copies |
+| `acm2/app/security/db_crypto.py` | RAM cache of data keys; wrap and unwrap |
+| `acm2/app/services/account_lifecycle.py` | Signup, account reset, delete |
+| `acm2/app/services/api_keys.py` | API key records and their wrapped copies |
+| `acm2/app/auth/session_revocation.py` | Per-user session generation |
+| `acm2/app/infra/db/encrypted_types.py` | Column encryption in MariaDB |

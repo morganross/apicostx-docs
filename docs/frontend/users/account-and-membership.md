@@ -34,7 +34,7 @@ Paid status is also what unlocks normal write flows from the frontend.
 
 On signup, the WordPress plugin creates or confirms the user's UUID and calls `POST /api/users`.
 
-The backend creates the user's encrypted database, seeds initial data, caches the DB key in RAM, and writes a recovery file.
+The backend creates the user's encrypted database, seeds initial data, holds the data key in RAM, and stores the wrapped copies of that key.
 
 ## Membership Changes
 

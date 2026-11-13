@@ -34,7 +34,7 @@ Examples: run not found, preset not found, provider key not found.
 
 Conflict with current encrypted-state assumptions.
 
-Primary example: password rekey requires the old DB key, but that key is no longer cached.
+Primary example: a password change or recovery was requested for a user who has no stored wrapped key record.
 
 ## `425`
 

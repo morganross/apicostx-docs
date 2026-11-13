@@ -25,11 +25,13 @@ These must not be logged, committed, or copied into docs.
 
 Per-user DBs are encrypted with SQLCipher.
 
-The DB key is derived from password material on the WordPress side and cached in backend RAM, not stored in plaintext on disk.
+Each user's data key is random and is made at signup. It is held in backend RAM while the user is active and is never stored in plaintext on disk.
 
-## Recovery Files
+The browser hashes every password with SHA-256 before it is sent. WordPress derives an unlock key from that hash and refuses any password that was not hashed.
 
-The backend stores wrapped DB keys in `user_{uuid}.recovery`.
+## Wrapped Key Files
+
+The backend stores wrapped copies of each user's data key in `data/wrapped_decode_keys/user_{uuid}.json`: one opened by the password unlock key and one opened by the recovery code.
 
 These files are sensitive and should be treated as recovery secrets, not ordinary app data.
 
